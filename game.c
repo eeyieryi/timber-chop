@@ -30,7 +30,7 @@ int GetRandomBranchPosition(Position previousPosition) {
 
 void InitializeTree(Position tree[MAX_TREE_CAPACITY]) {
     tree[0] = BRANCH_NONE;
-    for (int i = 7; i < MAX_TREE_CAPACITY; i++) {
+    for (int i = 1; i < MAX_TREE_CAPACITY; i++) {
         tree[i] = GetRandomBranchPosition(tree[i-1]);
     }
 }
