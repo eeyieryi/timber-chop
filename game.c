@@ -42,11 +42,17 @@ void UpdateTree(Position tree[MAX_TREE_CAPACITY]) {
     tree[MAX_TREE_CAPACITY-1] = GetRandomBranchPosition(tree[MAX_TREE_CAPACITY-2]);
 }
 
+#define AUDIO_FOLDER "./resources/audio/"
+
 int main(void) {
     int windowWidth = 640;
     int windowHeight = 480;
 
     InitWindow(windowWidth, windowHeight, "Timber Chop");
+    InitAudioDevice();
+
+    Sound chopSfx = LoadSound(AUDIO_FOLDER"chop.wav");
+    Sound hitSfx = LoadSound(AUDIO_FOLDER"hit.wav");
 
     SetTargetFPS(120);
 
@@ -99,6 +105,8 @@ int main(void) {
 
                 if (shouldUpdateTree) UpdateTree(tree);
                 playerPos = goTo;
+                if (gameOver) PlaySound(hitSfx);
+                else PlaySound(chopSfx);
             }
         }
 
@@ -149,6 +157,10 @@ int main(void) {
         EndDrawing();
     }
 
+    UnloadSound(chopSfx);
+    UnloadSound(hitSfx);
+
+    CloseAudioDevice();
     CloseWindow();
 
     return 0;
